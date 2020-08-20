@@ -13,6 +13,7 @@ class Auth extends React.Component {
         }
         this.universalHandler = this.universalHandler.bind(this);
         this.register = this.register.bind(this);
+        this.login = this.login.bind(this)
     }
 
     universalHandler(e) {
@@ -35,13 +36,26 @@ class Auth extends React.Component {
         })
     }
 
+    login(){
+        const {name, email, password} = this.state;
+        axios.post('/auth/login', {name, email, password})
+        .then(res => {
+            this.props.loginUser(res.data);
+            this.props.history.push('/about')
+
+        }).catch(err => {
+            console.log(err)
+            alert('Whoops. Bad credentials.')
+        })
+    }
+
     render() {
         return(
             <div className="auth">
                 Name: <input name='name' value={this.state.name} onChange={(e) => this.universalHandler(e)}/><br/>
                 Email: <input name='email' value={this.state.email} onChange={(e) => this.universalHandler(e)}/><br/>
                 Password: <input name='password' value={this.state.password} onChange={(e) => this.universalHandler(e)}/><br/>
-                <button>Login</button>
+                <button onClick={this.login}>Login</button>
                 <button onClick={this.register}>Register</button>
 
             </div>

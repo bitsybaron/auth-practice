@@ -2,12 +2,14 @@ import axios from 'axios';
 
 const initialState = {
     user: {},
-    isLoggedIn: false
+    isLoggedIn: false,
+    posts: []
 }
 
 const LOGIN_USER = 'LOGIN_USER';
 const LOGOUT_USER = 'LOGOUT_USER';
 const GET_USER = 'GET_USER';
+const GET_MY_POSTS = 'GET_MY_POSTS';
 
 
 export function loginUser(user){
@@ -32,6 +34,13 @@ export function logoutUser() {
     }
 }
 
+// export function getMyPosts() {
+//     return {
+//         type: GET_MY_POSTS,
+//         payload: posts
+//     }
+// }
+
 
 
 export default function(state = initialState, action){
@@ -42,6 +51,8 @@ export default function(state = initialState, action){
             return {...state, user: action.payload.data, isLoggedIn: true}
         case LOGOUT_USER:
             return {...state, ...action.payload}
+        // case GET_MY_POSTS:
+        //     return {...state, posts: action.payload.data}
         default:
             return initialState;
 
