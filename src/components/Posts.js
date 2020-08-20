@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {getUser} from '../redux/reducers';
+import {getPosts} from '../redux/reducers';
 
 class Posts extends React.Component {
     constructor(){
@@ -14,13 +15,10 @@ class Posts extends React.Component {
     }
     getMyPosts = () => {
         const {userId} = this.props.user;
-        console.log(this.props)
         axios.get(`/api/posts/${userId}`)
         .then(res => {
-            this.setState({
-                posts: res.data
-            })
-            console.log(res.data)
+            this.props.getPosts(res.data);
+            console.log(this.props.posts)
         }).catch(err => console.log(err));
     }
 
@@ -29,7 +27,6 @@ class Posts extends React.Component {
         this.getMyPosts();
     }
     render() {
-        console.log(this.state.posts)
         return(
             <div>
                 Hello World
@@ -40,4 +37,4 @@ class Posts extends React.Component {
 
 const mapStateToProps = state => state;
 
-export default connect(mapStateToProps, {getUser})(Posts);
+export default connect(mapStateToProps, {getUser, getPosts})(Posts);

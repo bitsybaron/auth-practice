@@ -56,7 +56,7 @@ module.exports = {
         const {userId} = req.params;
         console.log(userId)
         const db = req.app.get('db');
-        const posts = await db.get_my_posts(+userId);
+        const posts = await db.get_my_posts(userId);
         res.status(200).send(posts);
         
     }

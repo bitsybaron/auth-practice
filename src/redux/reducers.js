@@ -34,12 +34,12 @@ export function logoutUser() {
     }
 }
 
-// export function getMyPosts() {
-//     return {
-//         type: GET_MY_POSTS,
-//         payload: posts
-//     }
-// }
+export function getPosts(posts) {
+    return {
+        type: GET_MY_POSTS,
+        payload: posts
+    }
+}
 
 
 
@@ -51,8 +51,8 @@ export default function(state = initialState, action){
             return {...state, user: action.payload.data, isLoggedIn: true}
         case LOGOUT_USER:
             return {...state, ...action.payload}
-        // case GET_MY_POSTS:
-        //     return {...state, posts: action.payload.data}
+        case GET_MY_POSTS:
+            return {...state, posts: action.payload}
         default:
             return initialState;
 
