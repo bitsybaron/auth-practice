@@ -8,7 +8,7 @@ class Auth extends React.Component {
         super();
         this.state = {
             name: '',
-            username: '',
+            email: '',
             password: '',
         }
         this.universalHandler = this.universalHandler.bind(this);
@@ -22,11 +22,16 @@ class Auth extends React.Component {
     }
     
     register() {
-        const {name, username, password} = this.state;
-        axios.post('/auth/register', {name, username, password})
+        const {name, email, password} = this.state;
+        axios.post('/auth/register', {name, email, password})
         .then(res => {
             this.props.loginUser(res.data);
             this.props.history.push('/about')
+            console.log(this.props.user)
+        })
+        .catch(err => {
+            console.log(err)
+            alert('register failed :(')
         })
     }
 
@@ -34,10 +39,10 @@ class Auth extends React.Component {
         return(
             <div className="auth">
                 Name: <input name='name' value={this.state.name} onChange={(e) => this.universalHandler(e)}/><br/>
-                Email: <input name='username' value={this.state.username} onChange={(e) => this.universalHandler(e)}/><br/>
+                Email: <input name='email' value={this.state.email} onChange={(e) => this.universalHandler(e)}/><br/>
                 Password: <input name='password' value={this.state.password} onChange={(e) => this.universalHandler(e)}/><br/>
                 <button>Login</button>
-                <button>Register</button>
+                <button onClick={this.register}>Register</button>
 
             </div>
         )
@@ -45,5 +50,6 @@ class Auth extends React.Component {
 }
 
 const mapStateToProps = state => state;
+
 
 export default connect(mapStateToProps, {loginUser})(Auth);

@@ -4,6 +4,7 @@ module.exports = {
     register: async (req, res) => {
         const db = req.app.get('db');
         const {name, email, password} = req.body;
+        console.log(name, email, password)
         const existingUser = await db.check_user(email);
         if (existingUser[0]) {
             return res.status(409).send('user already exists')
@@ -18,5 +19,16 @@ module.exports = {
             }
             res.status(200).send(req.session.user)
         }
+    },
+    getUser: (req, res) => {
+        if(req.session.user) {
+            res.status(200).send(req.session.user)
+        } else {
+            res.status(404).send('yikes, why is this broken')
+        }
+    },
+    logout: (req, res) => {
+        req.session.destroy();
+        res.sendStatus(200)
     }
 }

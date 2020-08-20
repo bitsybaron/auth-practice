@@ -25,7 +25,9 @@ massive({
     console.log('connected to db')
 }).catch(err => console.log(err));
 
-app.post('/auth/register', ctrl.register)
+app.post('/auth/register', ctrl.register);
+app.get('/auth/user', ctrl.getUser);
+app.get('/auth/logout', ctrl.logout);
 
 
 
