@@ -3,13 +3,12 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {getUser} from '../redux/reducers';
 import {getPosts} from '../redux/reducers';
+import Form from './Form';
 
 class Posts extends React.Component {
     constructor(){
         super();
-        this.state = {
-            posts: []
-        }
+        
         this.getMyPosts = this.getMyPosts.bind(this);
         
     }
@@ -18,7 +17,7 @@ class Posts extends React.Component {
         axios.get(`/api/posts/${userId}`)
         .then(res => {
             this.props.getPosts(res.data);
-            console.log(this.props.posts)
+            
         }).catch(err => console.log(err));
     }
 
@@ -26,10 +25,26 @@ class Posts extends React.Component {
         this.props.getUser();
         this.getMyPosts();
     }
+
+    // componentDidUpdate(prevProps){
+    //     if (this.props.posts !== prevProps.posts) {
+    //         this.getMyPosts();
+    //     }
+        
+    // }
     render() {
+        // this.getMyPosts();
         return(
             <div>
-                Hello World
+                <Form user={this.props.user}/>
+                {this.props.posts.map(posts => {
+                    return <div className="posts"><p key={posts.post_id}>{posts.title}</p> 
+                    <p>by {posts.name}</p>
+                    <p>{posts.content}</p>
+                    
+                    </div>
+                    
+                })}
             </div>
         )
     }

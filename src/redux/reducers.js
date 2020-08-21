@@ -10,6 +10,7 @@ const LOGIN_USER = 'LOGIN_USER';
 const LOGOUT_USER = 'LOGOUT_USER';
 const GET_USER = 'GET_USER';
 const GET_MY_POSTS = 'GET_MY_POSTS';
+const ADD_POST = 'ADD_POST'
 
 
 export function loginUser(user){
@@ -41,6 +42,12 @@ export function getPosts(posts) {
     }
 }
 
+export function addPost(posts) {
+    return {
+        type: ADD_POST,
+        payload: posts
+    }
+}
 
 
 export default function(state = initialState, action){
@@ -53,6 +60,8 @@ export default function(state = initialState, action){
             return {...state, ...action.payload}
         case GET_MY_POSTS:
             return {...state, posts: action.payload}
+        case ADD_POST:
+            return {...state, posts: [action.payload, ...state.posts]}
         default:
             return initialState;
 

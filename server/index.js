@@ -29,7 +29,8 @@ app.post('/auth/register', ctrl.register);
 app.post('/auth/login', ctrl.login)
 app.get('/auth/user', ctrl.getUser);
 app.get('/auth/logout', ctrl.logout);
-app.get('/api/posts/:userId', ctrl.getPosts)
+app.get('/api/posts/:userId', ctrl.getPosts);
+app.post('/api/addpost', ctrl.addPost);
 
 
 
