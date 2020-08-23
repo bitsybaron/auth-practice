@@ -54,7 +54,6 @@ module.exports = {
     },
     getPosts: async (req, res) => {
         const {userId} = req.params;
-        console.log(userId)
         const db = req.app.get('db');
         const posts = await db.get_my_posts(userId);
         res.status(200).send(posts);
@@ -66,5 +65,12 @@ module.exports = {
         const posts = await db.add_post(title, body, userId);
         res.status(200).send(posts);
 
+    },
+    deletePost: async (req, res) => {
+        const {id} = req.params;
+        console.log(id)
+        const db = req.app.get('db');
+        const posts = await db.delete_post(id);
+        res.status(200).send(posts);
     }
 }

@@ -3,6 +3,7 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {getUser} from '../redux/reducers';
 import {getPosts} from '../redux/reducers';
+import {deletePost} from '../redux/reducers';
 import Form from './Form';
 
 class Posts extends React.Component {
@@ -10,6 +11,7 @@ class Posts extends React.Component {
         super();
         
         this.getMyPosts = this.getMyPosts.bind(this);
+        this.deletePost = this.deletePost.bind(this)
         
     }
     getMyPosts = () => {
@@ -21,30 +23,36 @@ class Posts extends React.Component {
         }).catch(err => console.log(err));
     }
 
+    deletePost = (id) => {
+        console.log('For Brenna')
+        axios.delete(`/api/post/${id}`)
+        .then(res => {
+            this.props.deletePost(res.data)
+        })
+        .catch(err => console.log(err));
+    }
+
     componentDidMount(){
         this.props.getUser();
         this.getMyPosts();
     }
 
-    // componentDidUpdate(prevProps){
-    //     if (this.props.posts !== prevProps.posts) {
-    //         this.getMyPosts();
-    //     }
-        
-    // }
+    
     render() {
         // this.getMyPosts();
+        console.log(this.props.posts)
         return(
             <div>
                 <Form user={this.props.user}/>
                 {this.props.posts.map(posts => {
-                    return <div className="posts"><p key={posts.post_id}>{posts.title}</p> 
+                    return <div key={posts.post_id} className="posts"><p>{posts.title}</p> 
                     <p>by {posts.name}</p>
                     <p>{posts.content}</p>
-                    
+                    <button onClick={() => this.deletePost(posts.post_id)}>Delete</button>
                     </div>
                     
                 })}
+                
             </div>
         )
     }
@@ -52,4 +60,4 @@ class Posts extends React.Component {
 
 const mapStateToProps = state => state;
 
-export default connect(mapStateToProps, {getUser, getPosts})(Posts);
+export default connect(mapStateToProps, {getUser, getPosts, deletePost})(Posts);

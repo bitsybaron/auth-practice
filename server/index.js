@@ -31,6 +31,7 @@ app.get('/auth/user', ctrl.getUser);
 app.get('/auth/logout', ctrl.logout);
 app.get('/api/posts/:userId', ctrl.getPosts);
 app.post('/api/addpost', ctrl.addPost);
+app.delete('/api/post/:id', ctrl.deletePost);
 
 
 

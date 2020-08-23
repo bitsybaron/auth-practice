@@ -10,7 +10,8 @@ const LOGIN_USER = 'LOGIN_USER';
 const LOGOUT_USER = 'LOGOUT_USER';
 const GET_USER = 'GET_USER';
 const GET_MY_POSTS = 'GET_MY_POSTS';
-const ADD_POST = 'ADD_POST'
+const ADD_POST = 'ADD_POST';
+const DELETE_POST = 'DELETE_POST';
 
 
 export function loginUser(user){
@@ -49,6 +50,13 @@ export function addPost(posts) {
     }
 }
 
+export function deletePost(posts) {
+    return {
+        type: DELETE_POST,
+        payload: posts
+    }
+}
+
 
 export default function(state = initialState, action){
     switch(action.type){
@@ -61,7 +69,9 @@ export default function(state = initialState, action){
         case GET_MY_POSTS:
             return {...state, posts: action.payload}
         case ADD_POST:
-            return {...state, posts: [action.payload, ...state.posts]}
+            return {...state, posts: [...action.payload, ...state.posts]}
+        case DELETE_POST:
+            return {...state, posts: [...action.payload]}
         default:
             return initialState;
 
